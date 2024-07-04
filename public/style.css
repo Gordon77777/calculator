@@ -1,3 +1,19 @@
+/* 
+
+Color pallete:
+--------------
+calculator-black: #212121;
+calculator-white: #fff;
+
+calculator-grey-one: #373737;
+calculator-grey-two: #909090;
+calculator-grey-three: #c0c0c0; (192, 192, 192)
+
+calculator-lilac: #bdb2fa;
+calculator-purple: #7a67f3;
+
+*/
+
 body {
     padding-top: 50px;
 }
@@ -27,3 +43,42 @@ body {
     margin: auto;
     background-color: white;
 }
+
+button {
+    /* Remove button default styles */
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+
+    /* box-shadow: */
+    box-shadow: -1px 1px 2px 0px rgba(192,192,192,1);
+    -webkit-box-shadow: -1px 1px 2px 0px rgba(192,192,192,1);
+    -moz-box-shadow: -1px 1px 2px 0px rgba(192,192,192,1);
+}
+
+[data-type="number"] {
+    background-color: #fff;
+    color: #7a67f3;
+}
+
+[data-type="operation"] {
+    background-color: #bdb2fa;
+    color: #fff;
+}
+
+[data-type="operation"].dark {
+    background-color: #7a67f3;
+}
+
+[data-type="operation"] .icon#icon-history::after {
+    content: url('assets/image/clock-rotate-left-solid.svg');
+}
+
+[data-type="operation"] .icon#icon-delete::after {
+    content: url('assets/image/delete-left-solid.svg');
+}
+

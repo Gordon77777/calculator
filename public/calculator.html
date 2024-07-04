@@ -18,38 +18,40 @@
             </div>
             <div id="button-container">
                 <div class="button-column">
-                    <button class="square" id="button-history"></button>
-                    <button class="square" id="button-7">7</button>
-                    <button class="square" id="button-4">4</button>
-                    <button class="square" id="button-1">1</button>
-                    <button class="square" id="buttton-delete"></button>
+                    <button class="square" id="button-history" data-type="operation" data-value="history">
+                        <span class="icon" id="icon-history"></span>
+                    </button>
+                    <button class="square" id="button-7" data-type="number" data-value="7">7</button>
+                    <button class="square" id="button-4" data-type="number" data-value="4">4</button>
+                    <button class="square" id="button-1" data-type="number" data-value="1">1</button>
+                    <button class="square" id="button-delete" data-type="operation" data-value="delete">
+                        <span class="icon" id="icon-delete"></span>
+                    </button>
                 </div>
                 <div class="button-column">
-                    <button class="square" id="button-history">AC</button>
-                    <button class="square" id="button-7">8</button>
-                    <button class="square" id="button-4">5</button>
-                    <button class="square" id="button-1">2</button>
-                    <button class="square" id="buttton-delete">0</button>
+                    <button class="square" id="button-ac" data-type="operation" data-value="ac">AC</button>
+                    <button class="square" id="button-8" data-type="number" data-value="8">8</button>
+                    <button class="square" id="button-5" data-type="number" data-value="5">5</button>
+                    <button class="square" id="button-2" data-type="number" data-value="2">2</button>
+                    <button class="square" id="button-0" data-type="number" data-value="0">0</button>
                 </div>
                 <div class="button-column">
-                    <button class="square" id="button-history">*</button>
-                    <button class="square" id="button-7">9</button>
-                    <button class="square" id="button-4">6</button>
-                    <button class="square" id="button-1">3</button>
-                    <button class="square" id="buttton-delete">.</button>
+                    <button class="square" id="button-asterisk" data-type="operation" data-value="*">*</button>
+                    <button class="square" id="button-9" data-type="number" data-value="9">9</button>
+                    <button class="square" id="button-6" data-type="number" data-value="6">6</button>
+                    <button class="square" id="button-3" data-type="number" data-value="3">3</button>
+                    <button class="square" id="button-fullstop" data-type="operation" data-value=".">.</button>
                 </div>
                 <div class="button-column">
-                    <button class="square" id="button-history">/</button>
-                    <button class="square" id="button-7">+</button>
-                    <button class="square" id="button-4">-</button>
-                    <button class="rectangle" id="button-1">=</button>
+                    <button class="square" id="button-divide" data-type="operation" data-value="/">/</button>
+                    <button class="square" id="button-plus" data-type="operation" data-value="+">+</button>
+                    <button class="square" id="button-minus" data-type="operation" data-value="-">-</button>
+                    <button class="rectangle dark" id="button-equals" data-type="operation" data-value="=">=</button>
                 </div>
             </div>
         </div>
 
-        <div id="fullscreen-history-container">
-
-        </div>
+        <div id="fullscreen-history-container"></div>
     </div>
 </body>
 </html>
