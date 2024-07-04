@@ -72,7 +72,7 @@ body {
 }
 
 #button-container {
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 button {
@@ -100,13 +100,30 @@ button:active{
 }
 
 button.square {
-    width: 56px;
-    height: 56px;
+    width: 54px;
+    height: 54px;
 }
 
 button.rectangle {
-    width: 56px;
+    width: 54px;
     height: 124px;
+}
+
+#button-history, #button-delete {
+    position: relative;
+}
+
+#button-history::after, #button-delete::after {
+    position: absolute;
+    width: 30px;
+}
+
+#button-history::after {
+    content: url('assets/images/clock-rotate-left-solid.svg');
+}
+
+#button-delete::after {
+    content: url('assets/images/delete-left-solid.svg');
 }
 
 [data-type="number"] {
@@ -125,14 +142,5 @@ button.rectangle {
 
 [data-type="operation"] {
     color: #fff;
-}
-
-[data-type="operation"] .icon#icon-history::after {
-    content: url('assets/images/clock-rotate-left-solid.svg');
-}
-
-[data-type="operation"] .icon#icon-delete::after {
-    color: #fff;
-    content: url('assets/images/delete-left-solid.svg');
 }
 

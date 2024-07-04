@@ -26,7 +26,6 @@ On click of an operation:
     - if the current calculation length > 2
         - if the last element of the current calculation is an operation
             - strip it from the end
-            (THIS IS A QUESTION THAT NEEDS TO BE ASKED AFTER SUBMISSION)
         - calculate the answer.
         - set the answer.
         - push the current calculation to the history.
