@@ -1,22 +1,22 @@
 window.addEventListener('DOMContentLoaded', (event) => {
 
-    const operation_buttons = document.querySelectorAll('button[data-type="operation"]');
-    const number_buttons = document.querySelectorAll('button[data-type="number"]');
-    const calculation_blueprint = {
+    const operationButtons = document.querySelectorAll('button[data-type="operation"]');
+    const numberButtons = document.querySelectorAll('button[data-type="number"]');
+    const calculationBlueprint = {
         elements: [],
         answer: null
     }
-    let calculation_current = calculation_blueprint;
-    let calculation_history = [];
+    let calculationCurrent = calculationBlueprint;
+    let calculationHistory = [];
 
     // Initialise buttons
-    operation_buttons.forEach((button) => {
+    operationButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
             handleOperationButtonClickEvent(event.target.dataset.value);
         })
     });
 
-    number_buttons.forEach((button) => {
+    numberButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
             handleNumberButtonClickEvent(event.target.dataset.value);
         })
@@ -25,34 +25,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
     function handleOperationButtonClickEvent(operation) {
         switch (operation) {
             case 'delete':
-                // delete the last digit or operation from the data array.
+                handleDeleteButtonClick();
                 break;
+
             case 'ac':
-                // set the current calculation to the default blank state.
+                handleClearCalculationClick();
                 break;
+
             case 'equals':
-                // - if the current calculation length > 2
-                //         - if the last element of the current calculation is an operation
-                //             - strip it from the end
-                // (THIS IS A QUESTION THAT NEEDS TO BE ASKED AFTER SUBMISSION)
-                //         - calculate the answer.
-                //         - set the answer.
-                //         - push the current calculation to the history.
-                //         - set the current calculation to the default blank state.
+                handleEqualsButtonClick();
                 break;
+
             case 'history':
-                // show fullscreen history, build html.
+                handleFullscreenHistoryButtonClick();
                 break;
+
             case '+':
-                // - if the last element of the calculation is a number
-            //         - push the operation onto the end of the current calculation.
-            //     - else
-            //         - if the length of the history > 0 AND length of the current_calculation is 0
-            //             - Push the last calculation history's number onto the current calculation and push the operation onto the end of the current
-            //               calculation.
+                handleMathOperatorButtonClick('+');
                 break;
+
             case '-':
-                
+                handleMathOperatorButtonClick('-');
                 break;
             default:
                 break;
@@ -60,8 +53,80 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     function handleNumberButtonClickEvent(number) {
-        console.log(number);
-        //     - if the last element of the current calculation is an operation OR the length of the current calculation is 0
-//         - push the number onto the end of the current calculation.
+        elementsLength = calculationCurrent.elements.length;
+
+        if (elementsLength === 0 || typeof calculationCurrent.elements[elementsLength - 1] !== 'number') {
+            calculationCurrent.elements.push(number);
+            // change html
+        }
+    }
+
+    function handleDeleteButtonClick() {
+        if (calculationCurrent.answer === null) {
+            calculationCurrent.elements.pop();
+            // document.querySelectorAll('button[data-type="operation"]');
+            // change html
+        }
+    }
+
+    function handleClearCalculationClick() {
+        calculationCurrent = calculationBlueprint;
+        // change html
+    }
+
+    function handleEqualsButtonClick() {
+        // Contains 2 numbers and an operation at a minimum
+        if (calculationCurrent.length > 2) {
+            // if the last element of the current calculation is an operation, strip it from the end of the array
+            // This needs clarification ...
+            if (typeof calculationCurrent[calculationCurrent.length - 1] !== 'number') {
+                calculationCurrent.elements.pop();
+            }
+            calculationCurrent.answer = calculateAnswer();
+            calculationHistory.push(calculationCurrent);
+            // change html
+            calculationCurrent = calculationBlueprint;
+        }
+    }
+
+    function handleFullscreenHistoryButtonClick() {
+
+    }
+
+    function handleMathOperatorButtonClick(operator) {
+        if (typeof calculationCurrent[calculationCurrent.length - 1] === 'number') {
+            calculationCurrent.elements.push(operator);
+        } else {
+            // New calculation with no number elements, so start the current calculation with the previous answer.
+            if (calculationHistory.length > 0 && calculationCurrent.elements.length === 0) {
+                let previousAnswer = calculationHistory[calculationHistory.length - 1].answer;
+                calculationCurrent.elements.push(previousAnswer);
+                calculationCurrent.elements.push(operator);
+            }
+        }
+        // change html
+    }
+
+    function calculateAnswer() {
+        let answer = calculationCurrent.elements[0];
+
+        for (let i = 0; i < calculationCurrent.elements.length; i++) {
+            // Is an operator - not a number, therefore calculate the result 
+            // of the current answer, the operator and element after the operator.
+            if (typeof (calculationCurrent.elements[i]) !== 'number') {
+                switch (calculationCurrent.elements[i]) {
+                    case '+':
+                        answer = answer + calculationCurrent.elements[i + 1];
+                        break;
+                    case '-':
+                        answer = answer - calculationCurrent.elements[i + 1];
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        return answer;
     }
 });
