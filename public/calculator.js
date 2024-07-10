@@ -1,80 +1,92 @@
+class calculation {
+    elements = [];
+    answer = null;
+}
+
 window.addEventListener('DOMContentLoaded', (event) => {
 
-    const operationButtons = document.querySelectorAll('button[data-type="operation"]');
-    const numberButtons = document.querySelectorAll('button[data-type="number"]');
-    const calculationBlueprint = {
-        elements: [],
-        answer: null
-    }
-    let calculationCurrent = calculationBlueprint;
+    const calculatorButtons = document.querySelectorAll('button[data-type="operation"], button[data-type="number"]');
+
+    let calculationChange = false;
+
+    let calculationCurrent = new calculation;
     let calculationHistory = [];
 
-    // Initialise buttons
-    operationButtons.forEach((button) => {
+    calculatorButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
-            handleOperationButtonClickEvent(event.target.dataset.value);
+            handleButtonClickEvent(event.target.dataset.type, event.target.dataset.value);
+            console.log(calculationCurrent);
+            console.log(calculationHistory);
         })
     });
 
-    numberButtons.forEach((button) => {
-        button.addEventListener('click', (event) => {
-            handleNumberButtonClickEvent(event.target.dataset.value);
-        })
-    });
+    function handleButtonClickEvent(type, value) {
+        calculationChange = false;
 
-    function handleOperationButtonClickEvent(operation) {
+        if (type === 'operation') {
+            processOperationButtonClick(value);
+        } else {
+            processNumberButtonClick(value);
+        }
+
+        if (calculationChange) {
+            setCalculatorHtml();
+        }
+    }
+
+    function processOperationButtonClick(operation) {
         switch (operation) {
             case 'delete':
-                handleDeleteButtonClick();
+                processDeleteButtonClick();
                 break;
 
             case 'ac':
-                handleClearCalculationClick();
+                processClearCalculationClick();
                 break;
 
             case 'equals':
-                handleEqualsButtonClick();
+                processEqualsButtonClick();
                 break;
 
             case 'history':
-                handleFullscreenHistoryButtonClick();
+                processFullscreenHistoryButtonClick();
                 break;
 
             case '+':
-                handleMathOperatorButtonClick('+');
+                processMathOperatorButtonClick('+');
                 break;
 
             case '-':
-                handleMathOperatorButtonClick('-');
+                processMathOperatorButtonClick('-');
                 break;
             default:
                 break;
         }
     }
 
-    function handleNumberButtonClickEvent(number) {
+    function processNumberButtonClick(number) {
         elementsLength = calculationCurrent.elements.length;
-
         if (elementsLength === 0 || typeof calculationCurrent.elements[elementsLength - 1] !== 'number') {
-            calculationCurrent.elements.push(number);
-            // change html
+            calculationCurrent.elements.push(Math.floor(number));
+            calculationChange = true;
         }
     }
 
-    function handleDeleteButtonClick() {
+    function processDeleteButtonClick() {
         if (calculationCurrent.answer === null) {
             calculationCurrent.elements.pop();
-            // document.querySelectorAll('button[data-type="operation"]');
-            // change html
+            calculationChange = true;
         }
     }
 
-    function handleClearCalculationClick() {
-        calculationCurrent = calculationBlueprint;
-        // change html
+    function processClearCalculationClick() {
+        if (calculationCurrent.elements.length > 0) {
+            calculationCurrent = new calculation;
+            calculationChange = true;
+        }
     }
 
-    function handleEqualsButtonClick() {
+    function processEqualsButtonClick() {
         // Contains 2 numbers and an operation at a minimum
         if (calculationCurrent.length > 2) {
             // if the last element of the current calculation is an operation, strip it from the end of the array
@@ -84,35 +96,34 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             calculationCurrent.answer = calculateAnswer();
             calculationHistory.push(calculationCurrent);
-            // change html
-            calculationCurrent = calculationBlueprint;
+            calculationCurrent = new calculation;
+            calculationChange = true;
         }
     }
 
-    function handleFullscreenHistoryButtonClick() {
+    function processFullscreenHistoryButtonClick() {
 
     }
 
-    function handleMathOperatorButtonClick(operator) {
+    function processMathOperatorButtonClick(operator) {
         if (typeof calculationCurrent[calculationCurrent.length - 1] === 'number') {
             calculationCurrent.elements.push(operator);
+            calculationChange = true;
         } else {
             // New calculation with no number elements, so start the current calculation with the previous answer.
             if (calculationHistory.length > 0 && calculationCurrent.elements.length === 0) {
                 let previousAnswer = calculationHistory[calculationHistory.length - 1].answer;
                 calculationCurrent.elements.push(previousAnswer);
                 calculationCurrent.elements.push(operator);
+                calculationChange = true;
             }
         }
-        // change html
     }
 
     function calculateAnswer() {
         let answer = calculationCurrent.elements[0];
 
         for (let i = 0; i < calculationCurrent.elements.length; i++) {
-            // Is an operator - not a number, therefore calculate the result 
-            // of the current answer, the operator and element after the operator.
             if (typeof (calculationCurrent.elements[i]) !== 'number') {
                 switch (calculationCurrent.elements[i]) {
                     case '+':
@@ -128,5 +139,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
 
         return answer;
+    }
+
+    function setCalculatorHtml(viewType = 'calculator') {
+        if (viewType === 'history') {
+
+        } else {
+
+        }
+        // set html based on current state of variables
     }
 });

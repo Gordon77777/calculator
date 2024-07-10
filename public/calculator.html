@@ -11,18 +11,34 @@
 
         <div id="calculator-inner-container">
             <div id="history-container">
-                history
+                <div class="historical-calculation-container">
+                    <span class="number">60</span>
+                    <span class="operator">+</span>
+                    <span class="number">60</span>
+                    <span id="equals">=</span>
+                    <span id="answer">120</span>
+                </div>
             </div>
-            <div id="calculation-area-container">
-                calculation area
+            <div id="calculation-area-outer-wrapper">
+                <div id="calculation-area-container">
+                    <span class="number">60</span>
+                    <span class="operator">+</span>
+                    <span class="number">60</span>
+                    <span id="equals">=</span>
+                    <span id="answer">120</span>
+                </div>
             </div>
             <div id="button-container">
                 <div class="button-column">
-                    <button class="square" id="button-history" data-type="operation" data-value="history"></button>
+                    <button class="square" id="button-history" data-type="operation" data-value="history">
+                        <img src="assets/images/clock-rotate-left-solid.svg" alt="history">
+                    </button>
                     <button class="square" id="button-7" data-type="number" data-value="7">7</button>
                     <button class="square" id="button-4" data-type="number" data-value="4">4</button>
                     <button class="square" id="button-1" data-type="number" data-value="1">1</button>
-                    <button class="square" id="button-delete" data-type="operation" data-value="delete"></button>
+                    <button class="square" id="button-delete" data-type="operation" data-value="delete">
+                        <img src="assets/images/delete-left-solid.svg" alt="backspace">
+                    </button>
                 </div>
                 <div class="button-column">
                     <button class="square" id="button-ac" data-type="operation" data-value="ac">AC</button>
