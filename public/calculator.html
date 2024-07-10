@@ -8,36 +8,24 @@
 </head>
 <body>
     <div id="calculator">
-
         <div id="calculator-inner-container">
-            <div id="history-container">
-                <div class="historical-calculation-container">
-                    <span class="number">60</span>
-                    <span class="operator">+</span>
-                    <span class="number">60</span>
-                    <span id="equals">=</span>
-                    <span id="answer">120</span>
-                </div>
-            </div>
+
+            <div id="history-container"></div>
+
             <div id="calculation-area-outer-wrapper">
-                <div id="calculation-area-container">
-                    <span class="number">60</span>
-                    <span class="operator">+</span>
-                    <span class="number">60</span>
-                    <span id="equals">=</span>
-                    <span id="answer">120</span>
-                </div>
+                <div id="calculation-area-container"></div>
             </div>
+
             <div id="button-container">
                 <div class="button-column">
                     <button class="square" id="button-history" data-type="operation" data-value="history">
-                        <img src="assets/images/clock-rotate-left-solid.svg" alt="history">
+                        <img src="assets/images/clock-rotate-left-solid.svg" alt="history" data-type="operation" data-value="history">
                     </button>
                     <button class="square" id="button-7" data-type="number" data-value="7">7</button>
                     <button class="square" id="button-4" data-type="number" data-value="4">4</button>
                     <button class="square" id="button-1" data-type="number" data-value="1">1</button>
-                    <button class="square" id="button-delete" data-type="operation" data-value="delete">
-                        <img src="assets/images/delete-left-solid.svg" alt="backspace">
+                    <button class="square btn-white" id="button-delete" data-type="operation" data-value="delete">
+                        <img src="assets/images/delete-left-solid.svg" alt="backspace" data-type="operation" data-value="delete">
                     </button>
                 </div>
                 <div class="button-column">
@@ -52,7 +40,7 @@
                     <button class="square" id="button-9" data-type="number" data-value="9">9</button>
                     <button class="square" id="button-6" data-type="number" data-value="6">6</button>
                     <button class="square" id="button-3" data-type="number" data-value="3">3</button>
-                    <button class="square" id="button-fullstop" data-type="operation" data-value=".">.</button>
+                    <button class="square btn-white" id="button-fullstop" data-type="operation" data-value=".">.</button>
                 </div>
                 <div class="button-column">
                     <button class="square" id="button-divide" data-type="operation" data-value="/">/</button>
@@ -64,6 +52,7 @@
         </div>
 
         <div class="hide" id="fullscreen-history-container"></div>
+
         <script src="calculator.js"></script>
     </div>
 </body>

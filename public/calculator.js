@@ -15,8 +15,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     calculatorButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
             handleButtonClickEvent(event.target.dataset.type, event.target.dataset.value);
-            console.log(calculationCurrent);
-            console.log(calculationHistory);
         })
     });
 
@@ -44,7 +42,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 processClearCalculationClick();
                 break;
 
-            case 'equals':
+            case '=':
                 processEqualsButtonClick();
                 break;
 
@@ -69,11 +67,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
         if (elementsLength === 0 || typeof calculationCurrent.elements[elementsLength - 1] !== 'number') {
             calculationCurrent.elements.push(Math.floor(number));
             calculationChange = true;
+        } else {
+            if (typeof calculationCurrent.elements[elementsLength - 1] === 'number') {
+                let newNumber = calculationCurrent.elements[elementsLength - 1] + '';
+                newNumber += number;
+                calculationCurrent.elements[elementsLength - 1] = Math.floor(newNumber);
+                calculationChange = true;
+            }
         }
     }
 
     function processDeleteButtonClick() {
-        if (calculationCurrent.answer === null) {
+        if (calculationCurrent.answer === null && calculationCurrent.elements.length > 0) {
             calculationCurrent.elements.pop();
             calculationChange = true;
         }
@@ -88,10 +93,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     function processEqualsButtonClick() {
         // Contains 2 numbers and an operation at a minimum
-        if (calculationCurrent.length > 2) {
+        if (calculationCurrent.elements.length > 2) {
             // if the last element of the current calculation is an operation, strip it from the end of the array
             // This needs clarification ...
-            if (typeof calculationCurrent[calculationCurrent.length - 1] !== 'number') {
+            if (typeof calculationCurrent.elements[calculationCurrent.elements.length - 1] !== 'number') {
                 calculationCurrent.elements.pop();
             }
             calculationCurrent.answer = calculateAnswer();
@@ -106,7 +111,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     function processMathOperatorButtonClick(operator) {
-        if (typeof calculationCurrent[calculationCurrent.length - 1] === 'number') {
+        if (typeof calculationCurrent.elements[calculationCurrent.elements.length - 1] === 'number') {
             calculationCurrent.elements.push(operator);
             calculationChange = true;
         } else {
@@ -127,10 +132,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
             if (typeof (calculationCurrent.elements[i]) !== 'number') {
                 switch (calculationCurrent.elements[i]) {
                     case '+':
-                        answer = answer + calculationCurrent.elements[i + 1];
+                        answer += calculationCurrent.elements[i + 1];
                         break;
                     case '-':
-                        answer = answer - calculationCurrent.elements[i + 1];
+                        answer -= calculationCurrent.elements[i + 1];
                         break;
                     default:
                         break;
@@ -145,8 +150,48 @@ window.addEventListener('DOMContentLoaded', (event) => {
         if (viewType === 'history') {
 
         } else {
+            let calculationArea = document.getElementById('calculation-area-container');
+            let calculationHistoryArea = document.getElementById('history-container');
+            let newCalculationAreaHtml = buildCalculationHtml(calculationCurrent);
+            let newCalculationHistoryHtml = buildCalculationHistoryHtml(calculationCurrent);
 
+            calculationArea.innerHTML = newCalculationAreaHtml;
+            calculationHistoryArea.innerHTML = newCalculationHistoryHtml;
+
+            let calculationHistoryEntries = document.getElementsByClassName('historical-calculation-container');
+            if (calculationHistoryEntries.length) {
+                Array.from(calculationHistoryEntries).forEach((element) => {
+                    element.scrollLeft = element.offsetWidth + element.offsetWidth;
+                });
+            }
+
+            calculationArea.scrollLeft = calculationArea.offsetWidth;
         }
-        // set html based on current state of variables
+    }
+
+    function buildCalculationHtml(calculation) {
+        let calculationHtml = '';
+        calculation.elements.forEach(element => {
+            if (typeof element === 'number') {
+                calculationHtml += `<span class="number">${element}</span>`;
+            } else {
+                calculationHtml += `<span class="operator">${element}</span>`;
+            }
+        });
+        if (calculation.answer) {
+            calculationHtml += `<span class="equals">=</span><span class="answer">${calculation.answer}</span>`;
+        }
+
+        return calculationHtml;
+    }
+
+    function buildCalculationHistoryHtml() {
+        let calculationHistoryHtml = '';
+        calculationHistory.forEach(calculation => {
+            let calculationHtml = buildCalculationHtml(calculation);
+            calculationHistoryHtml += `<div class="historical-calculation-container">${calculationHtml}</div>`;
+        });
+
+        return calculationHistoryHtml;
     }
 });

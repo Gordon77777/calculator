@@ -7,7 +7,7 @@
     --lilac: #bdb2fa;
     --purple: #7a67f3;
     --purple-2: #AC9EF9;
-    --purple-3: #4559F6;
+    --purple-3: #5945F6;
 
     --calculator-component-general-padding: 12px;
 }
@@ -76,12 +76,12 @@ body {
     color: var(--purple-2);
 }
 
-.historical-calculation-container #equals {
+.historical-calculation-container .equals {
     font-size: 16px;
 }
 
-.historical-calculation-container span#answer {
-    font-size: 36px;
+.historical-calculation-container span.answer {
+    font-size: 26px;
 }
 
 .historical-calculation-container span:not(.operator) {
@@ -94,8 +94,8 @@ body {
 
 .historical-calculation-container .number,
 .historical-calculation-container .operator,
-.historical-calculation-container #equals,
-.historical-calculation-container #answer {
+.historical-calculation-container .equals,
+.historical-calculation-container .answer {
     margin: 0px 0px 0px var(--calculator-component-general-padding);
 }
 
@@ -131,18 +131,18 @@ body {
     color: var(--purple-3);
 }
 
-#calculation-area-container #equals {
+#calculation-area-container .equals {
     font-size: 20px;
 }
 
-#calculation-area-container span#answer {
+#calculation-area-container span.answer {
     font-size: 36px;
 }
 
 #calculation-area-container .number,
 #calculation-area-container .operator,
-#calculation-area-container #equals,
-#calculation-area-container #answer {
+#calculation-area-container .equals,
+#calculation-area-container .answer {
     margin: 0px 0px 0px var(--calculator-component-general-padding);
 }
 
@@ -214,16 +214,22 @@ button.rectangle {
 
 #button-delete img {
     width: 30px;
+    background-color: var(--white);
 }
 
 [data-type="number"] {
     background-color: var(--white);
-    color: var(--purple);
+    color: var(--purple-3);
 }
 
 [data-type="operation"] {
     background-color: var(--lilac);
     color: var(--white);
+}
+
+[data-type="operation"].btn-white {
+    background-color: var(--white);
+    color: var(--purple-3);
 }
 
 [data-type="operation"].dark {
