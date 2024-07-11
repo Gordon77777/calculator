@@ -6,6 +6,7 @@ class calculation {
 window.addEventListener('DOMContentLoaded', (event) => {
 
     const calculatorButtons = document.querySelectorAll('button[data-type="operation"], button[data-type="number"]');
+    const closeFullscreenHistoryButton = document.querySelector('#close-history-button');
 
     let calculationChange = false;
 
@@ -17,6 +18,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
             handleButtonClickEvent(event.target.dataset.type, event.target.dataset.value);
         })
     });
+
+    closeFullscreenHistoryButton.addEventListener('click', (event) => {
+        toggleFullscreenHistory();
+    })
 
     function handleButtonClickEvent(type, value) {
         calculationChange = false;
@@ -107,7 +112,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
     function processFullscreenHistoryButtonClick() {
-
+        toggleFullscreenHistory();
     }
 
     function processMathOperatorButtonClick(operator) {
@@ -146,27 +151,25 @@ window.addEventListener('DOMContentLoaded', (event) => {
         return answer;
     }
 
-    function setCalculatorHtml(viewType = 'calculator') {
-        if (viewType === 'history') {
+    function setCalculatorHtml() {
+        let calculationArea = document.getElementById('calculation-area-container');
+        let calculationHistoryArea = document.getElementById('history-container');
+        let newCalculationAreaHtml = buildCalculationHtml(calculationCurrent);
+        let newCalculationHistoryHtml = buildCalculationHistoryHtml(calculationCurrent);
 
-        } else {
-            let calculationArea = document.getElementById('calculation-area-container');
-            let calculationHistoryArea = document.getElementById('history-container');
-            let newCalculationAreaHtml = buildCalculationHtml(calculationCurrent);
-            let newCalculationHistoryHtml = buildCalculationHistoryHtml(calculationCurrent);
+        calculationArea.innerHTML = newCalculationAreaHtml;
+        calculationHistoryArea.innerHTML = newCalculationHistoryHtml;
 
-            calculationArea.innerHTML = newCalculationAreaHtml;
-            calculationHistoryArea.innerHTML = newCalculationHistoryHtml;
+        calculationHistoryArea.scrollTop = calculationHistoryArea.offsetHeight + calculationHistoryArea.offsetHeight;
 
-            let calculationHistoryEntries = document.getElementsByClassName('historical-calculation-container');
-            if (calculationHistoryEntries.length) {
-                Array.from(calculationHistoryEntries).forEach((element) => {
-                    element.scrollLeft = element.offsetWidth + element.offsetWidth;
-                });
-            }
-
-            calculationArea.scrollLeft = calculationArea.offsetWidth;
+        let calculationHistoryEntries = document.getElementsByClassName('historical-calculation-container');
+        if (calculationHistoryEntries.length) {
+            Array.from(calculationHistoryEntries).forEach((element) => {
+                element.scrollLeft = element.offsetWidth + element.offsetWidth;
+            });
         }
+
+        calculationArea.scrollLeft = calculationArea.offsetWidth;
     }
 
     function buildCalculationHtml(calculation) {
@@ -193,5 +196,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
         });
 
         return calculationHistoryHtml;
+    }
+
+    function toggleFullscreenHistory() {
+        const calculationHistoryArea = document.querySelector('#history-container');
+        const components = '#calculation-area-outer-wrapper, #button-container, #close-history-button, #calculator-inner-container, #history-container';
+        const componentsToHide = document.querySelectorAll(components);
+        componentsToHide.forEach((component) => {
+            component.classList.toggle('fullscreen-history');
+        });
+
+        calculationHistoryArea.scrollTop = calculationHistoryArea.offsetHeight + calculationHistoryArea.offsetHeight;
     }
 });

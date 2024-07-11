@@ -27,10 +27,6 @@ body {
     padding-top: 50px;
 }
 
-.hide {
-    display: none;
-}
-
 #calculator {
     width: 276px;
     height: 645px;
@@ -38,23 +34,33 @@ body {
     border: 24px solid var(--grey-1);
     margin: auto;
     background-color: var(--white);
+    position: relative;
+    overflow: hidden;
 }
 
 #calculator-inner-container {
     width: 100%;
     height: 100%;
-    padding: var(--calculator-component-general-padding) 0px;
+    padding: 0px 0px var(--calculator-component-general-padding) 0px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     box-sizing: border-box;
+    overflow: hidden;
+}
+
+#calculator-inner-container.fullscreen-history {
+    justify-content: flex-start;
 }
 
 /* History Area */
-
 #history-container {
     overflow: scroll;
     padding: var(--calculator-component-general-padding);
+}
+
+#history-container.fullscreen-history {
+    flex-grow: 1;
 }
 
 .historical-calculation-container {
@@ -100,9 +106,13 @@ body {
 }
 
 /* Calculation Area */
-
 #calculation-area-outer-wrapper {
     padding: 0px var(--calculator-component-general-padding) var(--calculator-component-general-padding) var(--calculator-component-general-padding);
+    position: relative;
+}
+
+#calculation-area-outer-wrapper.fullscreen-history {
+    display: none;
 }
 
 #calculation-area-container span:first-child {
@@ -150,10 +160,14 @@ body {
     display: flex;
 }
 
-/* Button Area */
-
 #button-container {
     justify-content: center;
+    position: relative;
+    top: 0px;
+}
+
+#button-container.fullscreen-history {
+    display: none;
 }
 
 button {
@@ -238,5 +252,15 @@ button.rectangle {
 
 [data-type="operation"] {
     color: var(--white);
+}
+
+#close-history-button {
+    display: none;
+    align-self: flex-end;
+    margin: var(--calculator-component-general-padding);
+}
+
+#close-history-button.fullscreen-history {
+    display: inline-block;
 }
 
